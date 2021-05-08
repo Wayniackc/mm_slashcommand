@@ -4,17 +4,18 @@ import json
 from flask import Flask
 from flask import request
 
+import keys
+
 app = Flask(__name__)
 
 def GetWeather(zipcode):
-    api_key = "1a4f49e7b89b318dd4588b95707876ef"
-    url = f"https://api.openweathermap.org/data/2.5/weather?zip={zipcode}&appid={api_key}"
+    url = f"https://api.openweathermap.org/data/2.5/weather?zip={zipcode}&appid={keys.weather_api_key}"
     print(url)
 
     response = requests.get(url)
     print(response.json())
 
-    temp = response.json()['main']['temp']
+    temp = round(1.8 * (response.json()['main']['temp'] - 273) + 32, 1)
     print(temp)
 
 
