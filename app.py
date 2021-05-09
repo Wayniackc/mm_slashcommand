@@ -1,14 +1,13 @@
 import requests
 import json
 
-from flask import Flask
-from flask import request
+from flask import Flask, Response, request
 
 import keys
 
 app = Flask(__name__)
 
-def GetWeather(zipcode):
+def get_weather(zipcode):
     url = f"https://api.openweathermap.org/data/2.5/weather?zip={zipcode}&appid={keys.weather_api_key}"
     #print(url)
 
@@ -37,9 +36,15 @@ def GetWeather(zipcode):
 
     #print(len(json_body))
     
-    mm_response = build_response(json_body)
-    print(mm_response)
+    # mm_response = build_response(json_body)
+    # print(mm_response)
+    # return mm_response
+
+    mm_response = Response(response=json_body,
+                    status=200,
+                    mimetype="application/json")
     return mm_response
+
 
 def build_response(json_body):
     length = len(json_body)
@@ -57,6 +62,8 @@ def build_response(json_body):
 
 @app.route('/askwayne', methods = ['POST'])
 def slash_command():
+    # response = flask.Response()
+    # response.headers["Content-Type"] = "application/json"
     text = request.form.getlist('text')
     print(text)
     arguments = text[0].split(' ')
@@ -64,8 +71,8 @@ def slash_command():
     print(arguments[1])
     if arguments[0].lower() == "weather":
         zip = arguments[1]
-        response = GetWeather(zip)
-        return response
+        mm_response = get_weather(zip)
+        return mm_response
         #return GetWeather(zip)
     #return 'text'
     #return response
