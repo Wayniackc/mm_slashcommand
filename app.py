@@ -18,6 +18,11 @@ def slash_command():
     arguments = text[0].split(' ')
     if arguments[0].lower() == "weather":
         zip = arguments[1]
+        if len(zip) != 5:
+            mm_response = Response(response="Please enter a 5-digit US zip code",
+                status=400,
+                mimetype="application/json")
+            return mm_response
         mm_response = get_weather(zip)
         return mm_response
 
