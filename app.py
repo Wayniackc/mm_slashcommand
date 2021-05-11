@@ -51,7 +51,7 @@ def get_weather(zipcode):
 
     dic = {
         "response_type": "ephemeral",
-        "text": f"The sky is showing {desc} with a current temperature of {temp}F.",
+        "text": f"The sky is showing {desc} with a current temperature of {temp}°F.",
         "username": "AskWayne",
         "icon_url": icon_url
     }
