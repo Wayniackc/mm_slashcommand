@@ -16,7 +16,16 @@ def slash_command():
 
     text = request.form.getlist('text')
     arguments = text[0].split(' ')
-    if arguments[0].lower() == "weather":
+
+    if arguments[0].lower() == "help":
+        help_response = help_message()
+        mm_response = Response(
+            response=help_response,
+            status=200,
+            mimetype="application/json"
+            )
+        return mm_response
+    elif arguments[0].lower() == "weather":
         zip = arguments[1]
         if len(zip) != 5:
             help_response = help_message()
@@ -56,9 +65,10 @@ def get_weather(zipcode):
 
 
 def help_message():
-    help_file = open("help.json", "r")
-    help_json = json.dumps(help_file.read())
-    help_file.close()
+    file = open("help.json", "r")
+    help = json.loads(file.read())
+    help_json = json.dumps(help)
+    file.close()
 
     return help_json
     
