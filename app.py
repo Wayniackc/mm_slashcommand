@@ -19,18 +19,10 @@ def slash_command():
     if arguments[0].lower() == "weather":
         zip = arguments[1]
         if len(zip) != 5:
-            error_body = {
-                "response_type": "ephemeral",
-                "text": "Please enter a 5-digit US zip code.",
-                "username": "AskWayne",
-                "icon_url": "https://chat.ssctech.com/static/emoji/274c.png"
-            }
-
-            error_json = json.dumps(error_body)
-
+            help_response = help_message()
             mm_response = Response(
-                response=error_body,
-                status=400,
+                response=help_response,
+                status=200,
                 mimetype="application/json"
                 )
             return mm_response
@@ -62,5 +54,13 @@ def get_weather(zipcode):
                     mimetype="application/json")
     return mm_response
 
+
+def help_message():
+    help_file = open("help.json", "r")
+    help_json = json.dumps(help_file.read())
+    help_file.close()
+
+    return help_json
+    
 
 app.run(host='0.0.0.0', port=5005)

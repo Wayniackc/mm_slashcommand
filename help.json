@@ -1,0 +1,5 @@
+{
+"response_type": "ephemeral",
+"username": "AskWayne",
+"text": "\nAsk Wayne for various pieces of information that may or maybe not be useful. Check back often for more features!\n* `/askwayne weather <zipcode>` - Enter your 5-digit US zip code to receive the weather for your location."
+}
